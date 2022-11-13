@@ -1,0 +1,25 @@
+version: '3.7'
+
+# 将当前目录下的 ./docker/gitea 目录挂载到 gitea 容器
+# 将当前目录下的 ./docker/jenkins 目录挂载到 jenkins 容器
+
+services:
+  gitea:
+    image: gitea/gitea:1.17.3
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    ports:
+      - 222:22
+      - 3000:3000
+    volumes:
+      - ./docker/gitea:/data
+  jenkins: 
+    image: liaozibo/jenkins:ruby
+    restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./docker/jenkins:/var/jenkins_home
